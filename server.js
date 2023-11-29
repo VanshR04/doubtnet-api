@@ -11,6 +11,13 @@ const connectionParams = {
     useNewUrlParser: true,
 }
 
+const corsOptions = {
+    origin: 'https://doubtnet.onrender.com',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,  // If you are using cookies or sessions
+    optionsSuccessStatus: 204,  // Some legacy browsers (IE11, various SmartTVs) choke on 204
+  }
+
 const PORT = process.env.PORT
 try{
     mongoose.connect(process.env.MONGO_URI, connectionParams)
@@ -23,7 +30,7 @@ catch(e){
 }
 
 app.use(cors({
-    origin : ['http://localhost:3000',"http://doubtnet.onrender.com"],
+    origin : ['http://localhost:3000',"https://doubtnet.onrender.com/"],
     credentials: true
 }))
 app.use(express.json())
