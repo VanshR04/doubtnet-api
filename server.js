@@ -36,10 +36,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(cors({
-    origin : ['http://localhost:3000',"https://doubtnet.onrender.com/"],
-    credentials: true
-}))
+app.use(cors(corsOptions))
 app.use(express.json())
 
 app.post('/newdoubt',upload.none(), async(req,res) => {
