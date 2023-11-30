@@ -3,7 +3,8 @@ const mongoose = require('mongoose')
 const userSchema = new mongoose.Schema({
     name: String,
     email: String,
-    password : String
+    password : String,
+    liked : [{type : String}]
 }, {
     timestamps: true, // Enable timestamps for createdAt and updatedAt
 })

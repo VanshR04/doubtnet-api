@@ -12,7 +12,7 @@ const connectionParams = {
 }
 
 const corsOptions = {
-    origin: 'https://doubtnet.onrender.com',
+    origin: ['https://doubtnet.onrender.com','http://localhost:3000'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,  // If you are using cookies or sessions
     optionsSuccessStatus: 204,  // Some legacy browsers (IE11, various SmartTVs) choke on 204
@@ -29,12 +29,6 @@ catch(e){
     console.log(e);
 }
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://doubtnet.onrender.com');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-  next();
-});
 
 app.use(cors(corsOptions))
 app.use(express.json())
@@ -69,6 +63,15 @@ app.put('/:id/like', async(req,res) =>{
     const doubt = await Doubt.findById(id)
     if(!doubt) return res.status(404).send('The doubt with the given ID was not found.')
     doubt.likes++
+    await doubt.save()
+    res.json(doubt)
+})
+
+app.put('/:id/dislike', async(req,res) =>{
+    const id = req.params.id
+    const doubt = await Doubt.findById(id)
+    if(!doubt) return res.status(404).send('The doubt with the given ID was not found.')
+    doubt.likes--
     await doubt.save()
     res.json(doubt)
 })
